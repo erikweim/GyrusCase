@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileMovement : MonoBehaviour
+public class PlayerMissile : MonoBehaviour
 {
     private Transform tf = null;
     public float speed = 1.0f;
@@ -24,7 +24,7 @@ public class MissileMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (Vector3.Dot(start, tf.position) >=0)
+       if (Vector3.Dot(start, tf.position) >= 0)
         {
             Vector3 timeAdjMovement = direction * speed * Time.deltaTime;
             tf.SetPositionAndRotation(tf.position + timeAdjMovement, tf.rotation);
@@ -35,5 +35,15 @@ public class MissileMovement : MonoBehaviour
         }
         else { Destroy(gameObject); }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Enemy target = collision.GetComponent<Enemy>();
+        if (target != null)
+        {
+            target.Hit();
+            Destroy(gameObject);
+        }
     }
 }

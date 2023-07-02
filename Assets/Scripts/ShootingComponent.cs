@@ -29,4 +29,5 @@ public class ShootingComponent : MonoBehaviour
         yield return new WaitForSeconds(coolDownDuration);
         active = true;
     }
+
 }
