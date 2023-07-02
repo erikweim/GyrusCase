@@ -10,9 +10,9 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy = null;
     public GameObject player = null;
     public List<EnemyWave> waves;
-    public bool lastSpawned = false;
+    private bool lastSpawned = false;
     private List<GameObject> enemies = new List<GameObject>();
-    public Score score = null;
+    public GameController gc = null;
     private float playerRadius = 0.0f;
 
     void Start()
@@ -73,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
         //Setup for Score counting
         Enemy enemy = clone.GetComponent<Enemy>();
         if (enemy != null)
-        { enemy.score = score; }
+        { enemy.gc = gc; }
         else { Debug.Log("Instantiated Object missing Target."); }
 
         enemy.spawner = this;
@@ -84,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
         enemies.Remove(enemy);
         if(enemies.Count ==0 & lastSpawned)
         {
-            //Game Over
+            gc.GameOver();
             Debug.Log("GameOber");
         }
     }

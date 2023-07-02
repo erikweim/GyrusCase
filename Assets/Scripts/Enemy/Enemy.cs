@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Score score = null;
+    public GameController gc = null;
     public Transform tf = null;
     public EnemySpawner spawner = null;
     private Renderer renderer = null;
@@ -25,21 +25,23 @@ public class Enemy : MonoBehaviour
 
         if (tf != null)
         {
-            if (score != null)
+            if (gc != null)
             {
                 int scoreDelta = Mathf.RoundToInt(1/tf.position.magnitude*100);
-                score.ChangeScore(scoreDelta);
-                Destroy(gameObject);
+                gc.ChangeScore(scoreDelta);
+                RemoveEnemy();
             }
             else { Debug.Log("No Score Component"); }
         }
         else { Debug.Log("Missing Transform."); }
     }
 
-    private void OnDestroy()
+    private void RemoveEnemy()
     {
         spawner.EnemyDestroyed(gameObject);
+        Destroy(gameObject);
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

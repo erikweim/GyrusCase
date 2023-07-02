@@ -5,12 +5,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int lifes = 4;
-    public Lifes lifeScreen = null;
+    public LifesDisplay lifeScreen = null;
+    public GameController gc = null;
 
     private void Awake()
     {
         if (lifeScreen != null)
-        { lifeScreen.SetLife(lifes); }
+        { lifeScreen.DisplayLife(lifes); }
         else { Debug.Log("Missing ScreenText"); }
 
     }
@@ -23,11 +24,12 @@ public class Player : MonoBehaviour
         }
         else
         { lifes = 0;
-        //TODO Trigger Game Over
+            gc.GameOver();
+            Destroy(gameObject);
         }
 
         if (lifeScreen != null)
-        { lifeScreen.SetLife(lifes); }
+        { lifeScreen.DisplayLife(lifes); }
         else { Debug.Log("Missing ScreenText"); }
     }
 }

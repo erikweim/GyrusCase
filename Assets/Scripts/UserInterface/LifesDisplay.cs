@@ -4,20 +4,24 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
-public class Lifes : MonoBehaviour
+public class LifesDisplay : MonoBehaviour
 {
     public Text lifeText;
-    public int lifes = 0;
 
-    public void SetLife(int amount)
+    public void DisplayLife(int amount)
     {
-        lifes = amount;
         if (lifeText != null)
         {
-            lifeText.text = lifes.ToString();
+            lifeText.text = amount.ToString();
         }
         else
         { Debug.Log("Missing Text"); }
 
     }
+
+    public void HideDisplay()
+    {
+        gameObject.SetActive(false);
+    }
+    
 }

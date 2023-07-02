@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Score : MonoBehaviour
+public class ScoreDisplay : MonoBehaviour
 {
     public Text scoreText;
-    private int score = 0;
 
     private void Start()
     {
-        ChangeScore(0);
+        DisplayScore(0);
     }
 
-    public void ChangeScore(int amount)
+    public void DisplayScore(int score)
     {
-        score += amount;
         if (scoreText != null)
         {
             scoreText.text = score.ToString();
@@ -23,5 +21,10 @@ public class Score : MonoBehaviour
         else
         { Debug.Log("Missing Text"); }
 
+    }
+
+    public void HideDisplay()
+    {
+        gameObject.SetActive(false);
     }
 }
