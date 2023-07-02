@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    public CircularMovement circMov = null;
+    public ShootingComponent shootcomp = null;
+
     private CustomInput input = null;
     private float moveInput = 0.0f;
     private Transform tf = null;
-
-    public CircularMovement circMov = null;
-    public ShootingComponent shootcomp = null;
 
     private void Awake()
     {

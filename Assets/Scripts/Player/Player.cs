@@ -8,14 +8,6 @@ public class Player : MonoBehaviour
     public LifesDisplay lifeScreen = null;
     public GameController gc = null;
 
-    private void Awake()
-    {
-        if (lifeScreen != null)
-        { lifeScreen.DisplayLife(lifes); }
-        else { Debug.Log("Missing ScreenText"); }
-
-    }
-
     public void Hit()
     {
         if (lifes > 1)
@@ -31,5 +23,12 @@ public class Player : MonoBehaviour
         if (lifeScreen != null)
         { lifeScreen.DisplayLife(lifes); }
         else { Debug.Log("Missing ScreenText"); }
+    }
+    private void Awake()
+    {
+        if (lifeScreen != null)
+        { lifeScreen.DisplayLife(lifes); }
+        else { Debug.Log("Missing ScreenText"); }
+
     }
 }

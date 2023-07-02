@@ -7,11 +7,6 @@ public class ScoreDisplay : MonoBehaviour
 {
     public Text scoreText;
 
-    private void Start()
-    {
-        DisplayScore(0);
-    }
-
     public void DisplayScore(int score)
     {
         if (scoreText != null)
@@ -20,11 +15,15 @@ public class ScoreDisplay : MonoBehaviour
         }
         else
         { Debug.Log("Missing Text"); }
-
     }
 
     public void HideDisplay()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        DisplayScore(0);
     }
 }

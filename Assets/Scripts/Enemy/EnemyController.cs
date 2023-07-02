@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private CircularMovement cm = null;
-    void Awake()
+    private void Awake()
     {
         cm = GetComponent<CircularMovement>();
     }
 
-    void Update()
+    private void Update()
     {
         if (cm != null)
         {

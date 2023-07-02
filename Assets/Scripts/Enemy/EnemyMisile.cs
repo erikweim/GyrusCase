@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyMisile : MonoBehaviour
 {
-    private Transform tf = null;
     public float speed = 1.0f;
     public float scaleModifier = 1.0f;
+
+    private Transform tf = null;
     private Vector3 start = Vector3.zero;
     private Vector3 direction = Vector3.zero;
     private Renderer renderer = null;
@@ -24,7 +25,7 @@ public class EnemyMisile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (renderer.isVisible)
         {

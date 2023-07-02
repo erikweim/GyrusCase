@@ -12,15 +12,7 @@ public class CircularMovement : MonoBehaviour
     
     private float maxRadius = 0.0f;
     private bool scaling = false;
-
     private Transform tf = null;
-
-    // Start is called before the first frame update
-    private void Awake()
-    {
-        tf = GetComponent<Transform>();
-    }
-
 
     public void MoveOnCircle( float circularAmount, float radiusAmount)
     {
@@ -62,5 +54,10 @@ public class CircularMovement : MonoBehaviour
             this.maxRadius = maxRadius;
         }
         else { Debug.Log("Invalid Radius."); }
+    }
+
+    private void Awake()
+    {
+        tf = GetComponent<Transform>();
     }
 }

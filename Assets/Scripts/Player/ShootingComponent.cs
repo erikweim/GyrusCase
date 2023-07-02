@@ -6,6 +6,7 @@ public class ShootingComponent : MonoBehaviour
 {
     public GameObject missile = null;
     public float coolDownDuration = 1.0f;
+
     private bool active = true;
 
    public void Shoot(Vector3 position, Quaternion rotation)
@@ -30,4 +31,8 @@ public class ShootingComponent : MonoBehaviour
         active = true;
     }
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }

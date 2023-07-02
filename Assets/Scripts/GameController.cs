@@ -7,7 +7,8 @@ public class GameController : MonoBehaviour
     public GameOverDisplay gameOverScript = null;
     public ScoreDisplay scoreDisplay = null;
     public LifesDisplay lifesDisplay = null;
-    int score = 0;
+
+    private int score = 0;
 
   public void GameOver()
     {

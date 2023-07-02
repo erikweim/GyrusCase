@@ -1010,6 +1010,8 @@ MonoBehaviour:
     spawnTime: 0
   - number: 5
     spawnTime: 10
+  - number: 10
+    spawnTime: 10
   gc: {fileID: 1843396865}
 --- !u!4 &1456530496
 Transform:

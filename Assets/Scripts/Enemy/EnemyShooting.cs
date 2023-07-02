@@ -10,26 +10,29 @@ public class EnemyShooting : MonoBehaviour
     public float fixInterval = 1.0f;
     public bool random = true;
 
-    private void Awake()
-    {
-        StartCoroutine(AutoShoot());
-    }
     public void Shoot(Vector3 position, Quaternion rotation)
     {
         if (missile != null)
         {
-                Instantiate(missile, position, rotation);
+            Instantiate(missile, position, rotation);
         }
         else
         { Debug.Log("Missing Missile GameObject"); }
 
     }
-
-    public IEnumerator AutoShoot()
+    private IEnumerator AutoShoot()
     {
-        yield return new WaitForSeconds( random ? Random.Range(2.0f, 3.0f): fixInterval );
+        yield return new WaitForSeconds(random ? Random.Range(2.0f, 3.0f) : fixInterval);
         Shoot(gameObject.transform.position, gameObject.transform.rotation);
         StartCoroutine(AutoShoot());
     }
 
+    private void Awake()
+    {
+        StartCoroutine(AutoShoot());
+    }
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }

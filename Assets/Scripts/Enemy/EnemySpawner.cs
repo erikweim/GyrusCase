@@ -10,12 +10,24 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy = null;
     public GameObject player = null;
     public List<EnemyWave> waves;
+    public GameController gc = null;
+
     private bool lastSpawned = false;
     private List<GameObject> enemies = new List<GameObject>();
-    public GameController gc = null;
     private float playerRadius = 0.0f;
+    private float scale = 1.0f;
 
-    void Start()
+    public void EnemyDestroyed(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+        if (enemies.Count == 0 & lastSpawned)
+        {
+            //No more Enemies
+            gc.GameOver();
+        }
+    }
+
+    private void Start()
     {
         if (player != null)
         {
@@ -25,33 +37,40 @@ public class EnemySpawner : MonoBehaviour
 
         if (enemy != null)
         {
-            int numberWaves = waves.Count();
-            for ( int i = 0; i < numberWaves; i++)
-            {
-                EnemyWave wave = waves[i];
-                StartCoroutine(SpawnEnemies(wave.number, wave.spawnTime, i==numberWaves-1));
-            }
+            int numberWaves = waves.Count() - 1;
+            StartCoroutine(SpawnEnemies(waves[0].number, waves[0].spawnTime, numberWaves, 0));
         }
         else
-        { Debug.Log("Missing Enemy Prefab.");
+        {
+            Debug.Log("Missing Enemy Prefab.");
         }
+
+        scale = startRadius / playerRadius;
     }
 
-    private IEnumerator SpawnEnemies(int numEnemies, float timer, bool last)
+    private IEnumerator SpawnEnemies(int numEnemies, float timer, int numberWaves, int currentNumber)
     {
         yield return new WaitForSeconds(timer);
 
-        for (int i = 0; i < numEnemies; i++)
+        for (int currentEnemy = 0; currentEnemy < numEnemies; currentEnemy++)
         {
             GameObject clone = Instantiate(enemy, Vector3.zero, Quaternion.identity);
+            //sometimes popping up to big
+            clone.transform.localScale = new Vector3(scale, scale, scale);
+
             enemies.Add(clone);
 
-            SetupMovememt(clone, 2 * Mathf.PI / numEnemies * i);
+            SetupMovememt(clone, 2 * Mathf.PI / numEnemies * currentEnemy);
             SetupReferences(clone);
         }
 
-        if (last)
+        if (currentNumber == numberWaves)
         { lastSpawned = true; }
+        else
+        {
+            currentNumber++;
+            StartCoroutine(SpawnEnemies(waves[currentNumber].number, waves[currentNumber].spawnTime, numberWaves, currentNumber));
+        }
 
     }
 
@@ -79,13 +98,8 @@ public class EnemySpawner : MonoBehaviour
         enemy.spawner = this;
     }
 
-    public void EnemyDestroyed( GameObject enemy)
+    private void OnDestroy()
     {
-        enemies.Remove(enemy);
-        if(enemies.Count ==0 & lastSpawned)
-        {
-            gc.GameOver();
-            Debug.Log("GameOber");
-        }
+        StopAllCoroutines();
     }
 }
