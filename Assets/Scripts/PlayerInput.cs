@@ -7,19 +7,17 @@ public class PlayerInput : MonoBehaviour
 {
     private CustomInput input = null;
     private float moveInput = 0.0f;
-
-    public float radius = 5.0f;
-    public float moveSpeed = 0.01f;
-    public float radian = 0.0f;
-
     private Transform tf = null;
 
-    public GameObject missile = null;
+    public CircularMovement circMov = null;
+    public ShootingComponent shootcomp = null;
 
     private void Awake()
     {
         input = new CustomInput();
         tf = GetComponent<Transform>();
+        if (circMov == null) { circMov = GetComponent<CircularMovement>(); }
+        if (shootcomp == null) { shootcomp = GetComponent<ShootingComponent>();}
     }
 
     private void OnEnable()
@@ -64,32 +62,20 @@ public class PlayerInput : MonoBehaviour
 
     private void OnShootPerformed(InputAction.CallbackContext value)
     {
-        if (missile != null)
-        {
-            Instantiate(missile, tf.position, tf.rotation);
+        if (shootcomp != null)
+        { 
+            shootcomp.Shoot(tf.position, tf.rotation); 
         }
-        else
-        {
-            Debug.Log("Missing Missile GameObject");
-        }
+        else { Debug.Log("Missing Shooting Component."); }
     }
 
     private void Update()
     {
-        float timeAdjMovement = moveSpeed * Time.deltaTime * moveInput;
-
-        //moving along circle, see complex representation r*e^(i*phi)= r*(cos(phi) + i*sin(phi))
-        radian = Mathf.Repeat(radian + timeAdjMovement, 2 * Mathf.PI);
-        Vector3 newPos = radius * new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0.0f);
-
-        //LookRotation(Z-Axis, Y Axis) Z-Axis should point forward and Y-Axis to target
-        Quaternion newRot = Quaternion.LookRotation(Vector3.forward, newPos);
-
-        if (tf != null)
+        if (circMov != null)
         {
-            tf.SetLocalPositionAndRotation(newPos, newRot);
+            circMov.MoveOnCircle(moveInput, 0.0f);
         }
-        else { Debug.Log("Can't find Transform."); }
+        else { Debug.Log("Missing MovementComponent."); }
     }
 
 }
