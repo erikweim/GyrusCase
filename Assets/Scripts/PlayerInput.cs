@@ -14,6 +14,8 @@ public class PlayerInput : MonoBehaviour
 
     private Transform tf = null;
 
+    public GameObject missile = null;
+
     private void Awake()
     {
         input = new CustomInput();
@@ -62,8 +64,14 @@ public class PlayerInput : MonoBehaviour
 
     private void OnShootPerformed(InputAction.CallbackContext value)
     {
-        //TODO:Shooting
-        Debug.Log("Boom Baam.");
+        if (missile != null)
+        {
+            Instantiate(missile, tf.position, tf.rotation);
+        }
+        else
+        {
+            Debug.Log("Missing Missile GameObject");
+        }
     }
 
     private void Update()
